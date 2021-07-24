@@ -1,0 +1,30 @@
+<style>
+/* http://stackoverflow.com/questions/43872499/centered-box-of-text-with-a-border-wrapping-around-it/43872644#43872644 */
+body {
+  display: flex;
+  height: 100%; /* many thanks to byron jones */
+  align-items: center;
+  background-color: black;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 10vw; /* change this value as you need */
+  border: 0.1em solid white;
+  padding: 0.2em;
+  color: white;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  display: inline-block;
+}
+</style>
+<h1 id=say contentEditable=true>Hello world</h1>
+
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+	if(location.search) {
+		console.log(location.search)
+		document.getElementById("say").textContent = decodeURIComponent(location.search).slice(1)
+	}
+})
+</script>
+
