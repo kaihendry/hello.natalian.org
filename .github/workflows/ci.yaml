@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v2
       - run: find "$(pwd)"
       - name: S3 Sync to deploy
-        run: aws s3 sync --acl public-read index.html s3://hola.natalian.org
+        run: aws s3 sync --acl public-read . s3://hola.natalian.org
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
