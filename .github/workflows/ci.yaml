@@ -19,12 +19,13 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: kaihendry/s3-cloudfront-cloudformation
+          path: iac
       - run: find "$(pwd)"
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: hola
-          template: template.yaml
+          template: iac/template.yml
           parameter-overrides: "DomainName=hola.natalian.org,AcmWildcard=arn:aws:acm:us-east-1:407461997746:certificate/8e3ee384-d4f3-47b7-b0a6-c28fa0b4a26b"
       - name: S3 Sync to deploy
         run: aws s3 sync --acl public-read index.html s3://hola.natalian.org
