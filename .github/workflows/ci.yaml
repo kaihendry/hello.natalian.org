@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: Checkout project files
         uses: actions/checkout@v2
+      - run: find "$(pwd)"
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -18,7 +19,7 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: kaihendry/s3-cloudfront-cloudformation
-      - run: find
+      - run: find "$(pwd)"
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
@@ -26,9 +27,9 @@ jobs:
           template: template.yaml
           parameter-overrides: "DomainName=hola.natalian.org,AcmWildcard=arn:aws:acm:us-east-1:407461997746:certificate/8e3ee384-d4f3-47b7-b0a6-c28fa0b4a26b"
       - name: S3 Sync to deploy
-        run: |
-          aws s3 sync --acl public-read index.html s3://hola.natalian.org
+        run: aws s3 sync --acl public-read index.html s3://hola.natalian.org
       - name: Invalidate CloudFront
+        # TODO: Pass distribution ID from earlier Cloudformation step
         run: |
           aws cloudfront create-invalidation \
             --distribution-id "" \
